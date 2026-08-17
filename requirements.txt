@@ -1,0 +1,8 @@
+datasets
+pandas
+numpy
+matplotlib
+scikit-learn
+tensorflow
+transformers
+torch
