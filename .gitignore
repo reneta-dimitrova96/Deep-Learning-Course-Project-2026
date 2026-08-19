@@ -1,1 +1,42 @@
+# Dataset files
+data/
+*.csv
+*.tsv
+*.parquet
+*.jsonl
+*.feather
 
+# Saved models and checkpoints
+models/
+checkpoints/
+*.h5
+*.keras
+*.ckpt
+*.pkl
+*.joblib
+*.pt
+*.pth
+
+# NumPy data files
+*.npy
+*.npz
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+
+# Operating system files
+.DS_Store
+Thumbs.db
