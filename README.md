@@ -39,9 +39,9 @@ The PAWS-Wiki dataset was released by Google Research. **Google LLC (Google) is 
 
 ### Dataset Sources
 
-- PAWS-Wiki Dataset on Hugging Face
-- Official PAWS Repository by Google Research
-- PAWS paper
+- [PAWS-Wiki Dataset on Hugging Face](https://huggingface.co/datasets/google-research-datasets/paws)
+- [Official PAWS Repository by Google Research](https://github.com/google-research-datasets/paws)
+- [PAWS Paper](https://arxiv.org/abs/1904.01130)
 
 ## Models
 
@@ -92,20 +92,24 @@ Python, Pandas, NumPy, Matplotlib, Scikit-learn, TensorFlow/Keras, PyTorch, Hugg
 ### PAWS
 
 Yuan Zhang, Jason Baldridge, and Luheng He.  
-**PAWS: Paraphrase Adversaries from Word Scrambling.** 2019.
+**PAWS: Paraphrase Adversaries from Word Scrambling.** 2019.  
+[Paper on arXiv](https://arxiv.org/abs/1904.01130)
 
 ### DistilBERT
 
 Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf.  
-**DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter.** 2019.
+**DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter.** 2019.  
+[Paper on arXiv](https://arxiv.org/abs/1910.01108)
 
 ### Hugging Face Transformers
 
 Thomas Wolf, Lysandre Debut, Victor Sanh, Julien Chaumond, Clement Delangue, et al.  
-**Transformers: State-of-the-Art Natural Language Processing.**  
-Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations, 2020.
+**Transformers: State-of-the-Art Natural Language Processing.** 2020.  
+[Paper on ACL Anthology](https://aclanthology.org/2020.emnlp-demos.6/)
 
-## Software and Model Sources
+### Software and Model Sources
 
-- Hugging Face Transformers
-- DistilBERT Base Uncased on Hugging Face
+- [DistilBERT Base Uncased on Hugging Face](https://huggingface.co/distilbert/distilbert-base-uncased)
+- [Hugging Face Transformers](https://github.com/huggingface/transformers)
+- [DistilBERT Paper](https://arxiv.org/abs/1910.01108)
+- [Transformers Paper](https://aclanthology.org/2020.emnlp-demos.6/)
