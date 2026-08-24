@@ -6,9 +6,15 @@ data/
 *.jsonl
 *.feather
 
+# Keep model prediction files used for comparison
+!results/
+!results/*.csv
+
 # Saved models and checkpoints
 models/
 checkpoints/
+**/checkpoint-*/
+*.safetensors
 *.h5
 *.keras
 *.ckpt
@@ -16,6 +22,12 @@ checkpoints/
 *.joblib
 *.pt
 *.pth
+
+# Hugging Face / training outputs
+distilbert_results/
+distilbert_results_*/
+distilbert_lr_*/
+distilbert_final/
 
 # NumPy data files
 *.npy
@@ -36,6 +48,9 @@ env/
 
 # Environment variables / secrets
 .env
+
+# Local caches
+.cache/
 
 # Operating system files
 .DS_Store
