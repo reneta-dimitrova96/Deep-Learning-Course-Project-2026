@@ -4,5 +4,7 @@ numpy
 matplotlib
 scikit-learn
 tensorflow
-transformers
 torch
+transformers
+accelerate
+optuna
