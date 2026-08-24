@@ -107,6 +107,18 @@ Thomas Wolf, Lysandre Debut, Victor Sanh, Julien Chaumond, Clement Delangue, et 
 **Transformers: State-of-the-Art Natural Language Processing.** 2020.  
 [Paper on ACL Anthology](https://aclanthology.org/2020.emnlp-demos.6/)
 
+### Optuna
+
+Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama.  
+**Optuna: A Next-generation Hyperparameter Optimization Framework.** 2019.  
+[Paper on ACM Digital Library](https://doi.org/10.1145/3292500.3330701)
+
+### Hugging Face Datasets
+
+Quentin Lhoest, Albert Villanova del Moral, Yacine Jernite, Abhishek Thakur, Patrick von Platen, et al.  
+**Datasets: A Community Library for Natural Language Processing.** 2021.  
+[Paper on arXiv](https://arxiv.org/abs/2109.02846)
+
 ### Software and Model Sources
 
 - [DistilBERT Base Uncased on Hugging Face](https://huggingface.co/distilbert/distilbert-base-uncased)
