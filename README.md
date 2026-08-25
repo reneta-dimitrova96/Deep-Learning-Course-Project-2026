@@ -12,6 +12,8 @@ Semantic paraphrase detection is the task of determining whether two sentences e
 
 This is a challenging NLP problem because two sentences can contain many of the same words while expressing different meanings, or they can express the same meaning using different sentence structures.
 
+Paraphrase detection can be useful in applications such as duplicate question detection, information retrieval, search and text matching.
+
 The goal of this project is to compare three approaches with different levels of model complexity:
 
 - TF-IDF with Logistic Regression as a traditional machine learning baseline
