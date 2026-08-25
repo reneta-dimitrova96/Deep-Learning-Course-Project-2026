@@ -6,10 +6,6 @@ data/
 *.jsonl
 *.feather
 
-# Keep model prediction files used for comparison
-!results/
-!results/*.csv
-
 # Saved models and checkpoints
 models/
 checkpoints/
