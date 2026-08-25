@@ -4,19 +4,27 @@
 
 This repository contains an educational project created as part of the Deep Learning course at SoftUni.
 
-The goal of the project is to compare different approaches for determining whether two sentences have the same meaning.
+The project investigates how different machine learning and deep learning approaches perform on the task of semantic paraphrase detection.
 
-Three approaches are explored:
+## Problem Statement
+
+Semantic paraphrase detection is the task of determining whether two sentences express the same meaning.
+
+This is a challenging NLP problem because two sentences can contain many of the same words while expressing different meanings, or they can express the same meaning using different sentence structures.
+
+The goal of this project is to compare three approaches with different levels of model complexity:
 
 - TF-IDF with Logistic Regression as a traditional machine learning baseline
 - A Siamese BiLSTM neural network with a shared encoder
 - Fine-tuning a pretrained DistilBERT language model
 
+The models are evaluated on the same test data using accuracy, precision, recall and F1-score.
+
 ## Dataset
 
 The project uses the **PAWS-Wiki Labeled (Final)** dataset from the PAWS (Paraphrase Adversaries from Word Scrambling) collection.
 
-PAWS-Wiki contains sentence pairs based on Wikipedia text.
+PAWS-Wiki contains sentence pairs based on Wikipedia text, including challenging paraphrase and non-paraphrase examples with high lexical overlap.
 
 Labels:
 
@@ -29,63 +37,143 @@ Original dataset size:
 - **8,000** validation examples
 - **8,000** test examples
 
-During data preparation, exact duplicate sentence pairs and pairs with conflicting labels are removed. The cleaned datasets contain:
+### Data Preparation
+
+The same cleaning procedure is applied consistently across the project.
+
+Sentence pairs with conflicting labels are removed, and only one occurrence of the remaining exact duplicate sentence pairs is kept.
+
+After cleaning, the datasets contain:
 
 - **49,334** training examples
 - **7,994** validation examples
 - **7,977** test examples
 
-The PAWS-Wiki dataset was released by Google Research. **Google LLC (Google) is acknowledged as the data source.**
+The training, validation and test sets are kept separate throughout model development and evaluation.
+
+The PAWS-Wiki dataset was released by Google Research. Google LLC (Google) is acknowledged as the data source.
 
 ### Dataset Sources
 
 - [PAWS-Wiki Dataset on Hugging Face](https://huggingface.co/datasets/google-research-datasets/paws)
 - [Official PAWS Repository by Google Research](https://github.com/google-research-datasets/paws)
-- [PAWS Paper](https://arxiv.org/abs/1904.01130)
+- [PAWS: Paraphrase Adversaries from Word Scrambling](https://arxiv.org/abs/1904.01130)
 
 ## Models
 
-### TF-IDF + Logistic Regression
+### 1. TF-IDF + Logistic Regression
 
-A traditional machine learning baseline is created using TF-IDF text features and Logistic Regression.
+A traditional machine learning baseline is created using TF-IDF representations of the sentence pairs and Logistic Regression.
 
-A balanced version of Logistic Regression is selected based on the validation results.
+Different settings are evaluated on the validation set, and a Logistic Regression model with balanced class weights is selected as the final baseline.
 
-### Siamese BiLSTM
+### 2. Siamese BiLSTM
 
-A Siamese neural network is built using a shared encoder consisting of an Embedding layer and a Bidirectional LSTM.
+A Siamese neural network is built using a shared encoder containing an Embedding layer and a Bidirectional LSTM.
 
-The two sentences are processed separately through the same encoder and their learned representations are compared for paraphrase classification.
+Each sentence is processed through the same encoder, and the resulting representations are compared for binary paraphrase classification.
 
-Several versions of the model are explored, including different model sizes, dropout settings, hyperparameter tuning and L2 regularization.
+Several model versions are explored, including changes in model capacity, dropout, learning rate, Optuna hyperparameter tuning and L2 regularization.
 
-### Pretrained Language Model
+The original Siamese BiLSTM configuration achieves the best validation F1-score among the tested versions and is selected for final evaluation.
 
-The final approach fine-tunes the pretrained **DistilBERT Base Uncased** model for binary sentence-pair classification.
+### 3. Pretrained DistilBERT
 
-DistilBERT was selected because it provides contextual representations while being smaller and faster than BERT, making it suitable for fine-tuning with limited computational resources.
+The third approach fine-tunes the pretrained **DistilBERT Base Uncased** model for binary sentence-pair classification.
 
-The model is loaded and fine-tuned using the **Hugging Face Transformers** library and PyTorch.
+DistilBERT was selected because it provides contextual language representations while being smaller and faster than BERT, making it a practical choice for fine-tuning with limited computational resources.
 
-## Model Comparison
+Learning rate and weight decay experiments are performed using the validation set.
 
-The three approaches are evaluated on the same cleaned test set using accuracy, precision, recall and F1-score.
+The selected configuration uses:
 
-The traditional TF-IDF baseline provides a reference point for the project. The Siamese BiLSTM improves the classification performance considerably, while the pretrained DistilBERT model achieves the strongest overall results.
+- learning rate: `2e-5`
+- weight decay: `0.01`
+- training epochs: `3`
+- batch size: `16`
 
-A separate model comparison and error analysis notebook examines the differences between the approaches in more detail.
+The model is loaded and fine-tuned using Hugging Face Transformers and PyTorch.
+
+## Evaluation
+
+All final models are evaluated on the same cleaned test set containing **7,977 sentence pairs**.
+
+For precision, recall and F1-score, the paraphrase class (`label = 1`) is treated as the positive class.
+
+The main evaluation metrics are:
+
+- **Accuracy** – proportion of all predictions that are correct
+- **Precision** – proportion of predicted paraphrases that are actually paraphrases
+- **Recall** – proportion of true paraphrases correctly identified by the model
+- **F1-score** – harmonic mean of precision and recall
+
+## Final Results
+
+| Model | Accuracy | Precision | Recall | F1-score |
+|---|---:|---:|---:|---:|
+| TF-IDF + Logistic Regression | 0.5295 | 0.4718 | 0.5521 | 0.5088 |
+| Siamese BiLSTM | 0.7415 | 0.6856 | 0.7654 | 0.7233 |
+| DistilBERT | **0.8844** | **0.8453** | **0.9034** | **0.8734** |
+
+The results show a clear improvement from the traditional machine learning baseline to the deep learning approaches.
+
+The Siamese BiLSTM improves considerably over TF-IDF with Logistic Regression, while DistilBERT achieves the strongest performance across all four evaluation metrics.
+
+The final DistilBERT test F1-score is **0.8734**.
+
+## Error Analysis
+
+The final notebook compares the prediction errors produced by the three approaches.
+
+The analysis includes:
+
+- examples correctly classified by DistilBERT but missed by both other models
+- examples misclassified by all three models
+- DistilBERT false positives and false negatives
+- common patterns found in difficult sentence pairs
+
+The results show that high lexical similarity can be challenging for all three approaches when small changes in names, relationships, word order or sentence structure affect the meaning.
+
+DistilBERT correctly classifies many examples that are misclassified by the other two models, although some challenging cases remain. 
 
 ## Project Structure
 
 - `notebooks/01_data_preparation_and_eda.ipynb` – data loading, cleaning and exploratory data analysis
-- `notebooks/02_traditional_ml_baseline.ipynb` – TF-IDF and Logistic Regression baseline
+- `notebooks/02_traditional_ml_baseline.ipynb` – TF-IDF + Logistic Regression baseline
 - `notebooks/03_siamese_neural_network.ipynb` – Siamese BiLSTM experiments
-- `notebooks/04_pretrained_language_model_fine_tuning.ipynb` – pretrained DistilBERT fine-tuning and evaluation
-- `notebooks/05_model_comparison_and_error_analysis.ipynb` – model comparison and error analysis
+- `notebooks/04_pretrained_language_model_fine_tuning.ipynb` – pretrained DistilBERT fine-tuning, tuning and evaluation
+- `notebooks/05_model_comparison_and_error_analysis.ipynb` – final model comparison and error analysis
+- `requirements.txt` – Python dependencies
+- `.gitignore` – files and generated model artifacts excluded from version control
+
+## Running the Project
+
+The notebooks were developed and executed in Google Colab.
+
+The notebooks follow the project workflow in numerical order:
+
+`01 → 02 → 03 → 04 → 05`
+
+The dataset is downloaded directly from Hugging Face and is not stored in this repository.
+
+Model checkpoints, trained model weights and training output directories are also excluded from the repository.
+
+Notebooks 02–04 generate local prediction files used for the final model comparison. These intermediate files are not committed to the repository, while the saved outputs in Notebook 05 document the final comparison and error analysis.
 
 ## Tools and Libraries
 
-Python, Pandas, NumPy, Matplotlib, Scikit-learn, TensorFlow/Keras, PyTorch, Hugging Face Transformers, Hugging Face Datasets, Accelerate, Optuna and Google Colab.
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Scikit-learn
+- TensorFlow / Keras
+- PyTorch
+- Hugging Face Transformers
+- Hugging Face Datasets
+- Accelerate
+- Optuna
+- Google Colab
 
 ## References
 
@@ -107,21 +195,22 @@ Thomas Wolf, Lysandre Debut, Victor Sanh, Julien Chaumond, Clement Delangue, et 
 **Transformers: State-of-the-Art Natural Language Processing.** 2020.  
 [Paper on ACL Anthology](https://aclanthology.org/2020.emnlp-demos.6/)
 
-### Optuna
-
-Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama.  
-**Optuna: A Next-generation Hyperparameter Optimization Framework.** 2019.  
-[Paper on ACM Digital Library](https://doi.org/10.1145/3292500.3330701)
-
 ### Hugging Face Datasets
 
 Quentin Lhoest, Albert Villanova del Moral, Yacine Jernite, Abhishek Thakur, Patrick von Platen, et al.  
 **Datasets: A Community Library for Natural Language Processing.** 2021.  
 [Paper on arXiv](https://arxiv.org/abs/2109.02846)
 
+### Optuna
+
+Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama.  
+**Optuna: A Next-generation Hyperparameter Optimization Framework.** 2019.  
+[Paper on ACM Digital Library](https://doi.org/10.1145/3292500.3330701)
+
 ### Software and Model Sources
 
 - [DistilBERT Base Uncased on Hugging Face](https://huggingface.co/distilbert/distilbert-base-uncased)
 - [Hugging Face Transformers](https://github.com/huggingface/transformers)
-- [DistilBERT Paper](https://arxiv.org/abs/1910.01108)
-- [Transformers Paper](https://aclanthology.org/2020.emnlp-demos.6/)
+- [Hugging Face Datasets](https://github.com/huggingface/datasets)
+- [Optuna](https://github.com/optuna/optuna)
+
