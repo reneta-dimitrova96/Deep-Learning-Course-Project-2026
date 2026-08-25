@@ -177,6 +177,12 @@ Notebooks 02–04 generate local prediction files used for the final model compa
 - Optuna
 - Google Colab
 
+## Author
+
+This project was created by **Reneta Dimitrova** as part of the Deep Learning course at SoftUni.
+
+The notebooks, experiments and analysis were developed for this course project. External datasets, pretrained models and software libraries are listed in the relevant sections and references.
+
 ## References
 
 ### PAWS
