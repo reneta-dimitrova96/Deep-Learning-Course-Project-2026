@@ -210,7 +210,13 @@ Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama.
 ### Software and Model Sources
 
 - [DistilBERT Base Uncased on Hugging Face](https://huggingface.co/distilbert/distilbert-base-uncased)
-- [Hugging Face Transformers](https://github.com/huggingface/transformers)
-- [Hugging Face Datasets](https://github.com/huggingface/datasets)
-- [Optuna](https://github.com/optuna/optuna)
+
+- [Hugging Face Transformers Documentation](https://huggingface.co/docs/transformers/index)
+- [Hugging Face Transformers GitHub Repository](https://github.com/huggingface/transformers)
+
+- [Hugging Face Datasets Documentation](https://huggingface.co/docs/datasets/index)
+- [Hugging Face Datasets GitHub Repository](https://github.com/huggingface/datasets)
+
+- [Optuna Documentation](https://optuna.readthedocs.io/en/stable/)
+- [Optuna GitHub Repository](https://github.com/optuna/optuna)
 
